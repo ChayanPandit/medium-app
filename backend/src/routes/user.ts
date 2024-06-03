@@ -11,6 +11,9 @@ export const userRouter = new Hono<{
     }
   }>()
 
+
+
+  
 userRouter.post('/signup', async(c) => {
   
     const prisma = new PrismaClient({
@@ -18,7 +21,10 @@ userRouter.post('/signup', async(c) => {
     }).$extends(withAccelerate())
   
     const body = await c.req.json()
-    const {success} = signupInput.safeParse(body)
+    const {success,error} = signupInput.safeParse(body)
+    
+    console.log(body)
+    console.log(error)
 
     if(!success) {
       c.status(411)
@@ -42,6 +48,8 @@ userRouter.post('/signup', async(c) => {
     return c.json({ jwt: token })
   })
   
+
+
   userRouter.post('/signin', async(c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env?.DATABASE_URL
@@ -60,7 +68,7 @@ userRouter.post('/signup', async(c) => {
       c.status(403);
       return c.json({ error : "user not found"});
     }
-    const token =  sign({ id: user.id }, c.env.JWT_SECRET)
-  
+    const token = await sign({ id: user.id }, c.env.JWT_SECRET)
+    console.log(token)
     return c.json({ jwt: token })
   })

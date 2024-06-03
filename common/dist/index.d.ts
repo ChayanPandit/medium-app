@@ -26,26 +26,26 @@ export declare const signinInput: z.ZodObject<{
 export type SigninInput = z.infer<typeof signinInput>;
 export declare const createBlogInput: z.ZodObject<{
     title: z.ZodString;
-    content: z.ZodString;
+    content: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     title: string;
-    content: string;
+    content?: string | undefined;
 }, {
     title: string;
-    content: string;
+    content?: string | undefined;
 }>;
 export type CreateBlogInput = z.infer<typeof createBlogInput>;
 export declare const updateBlogInput: z.ZodObject<{
     title: z.ZodString;
-    content: z.ZodString;
+    content: z.ZodOptional<z.ZodString>;
     id: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     title: string;
-    content: string;
     id: string;
+    content?: string | undefined;
 }, {
     title: string;
-    content: string;
     id: string;
+    content?: string | undefined;
 }>;
 export type UpdateBlogInput = z.infer<typeof updateBlogInput>;
